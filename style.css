@@ -1,1 +1,11 @@
+/* Formatting the movies on the page */
+#movie-grid {
+display: flex;
+flex-wrap: wrap;
+}
 
+.movie-card {
+    flex: 5%;
+    margin: 1cm;
+    text-align: center;
+}
