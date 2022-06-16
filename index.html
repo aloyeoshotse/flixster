@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flixster: Movie Database</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Flixster</h1>
+    <form id="search">
+        <input type="text" id="search-input" placeholder="Search Flixster">
+        <button id="search-btn" type="submit">Search</button><span>
+        <button id="close-search-btn"></button></span>
+    </form>
+    <div id="movie-grid">
+        <div class="movie-card">
+            <div class="movie-title"></div>
+            <img id="movie-poster" src="" alt="">
+            <div class="movie-votes"></div>
+        </div>
+    </div>
+    <footer>
+        <button id="load-more-movies-btn"></button>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>
