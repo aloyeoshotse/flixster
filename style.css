@@ -20,13 +20,28 @@ h1 {
     padding: 14px 16px;
     font-size: 17px;
     width: 75%;
-    height: 25%
+    height: 25;
+    border-radius: 10px;
 }
 
 #search-btn {
     padding: 14px 16px;
     font-size: 17px;
+    border-radius: 10px;
 }
+
+#close-search-btn {
+    padding: 14px 16px;
+    font-size: 17px;
+    border-radius: 10px;
+}
+
+#search-error {
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 3.5cm;
+}
+
 
 footer {
     display: flex;

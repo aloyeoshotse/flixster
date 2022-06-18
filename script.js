@@ -17,6 +17,7 @@ const loadMoreMovies = document.querySelector("#load-more-movies-btn");
 const api = "517461a5845ab1a8b80623111b4006fc"; //api key from the MOVIE DB
 var userInputElem; //user input into search bar
 var page = 1;
+var mainPage;
 //var year; //year the movie was released
 
 //Filter Variables
@@ -27,46 +28,54 @@ var page = 1;
 
 
 //functions to load main page
-async function makeCurrentPage(loadevent) {
-    loadevent.preventDefault();
-    let curr_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
-    let curr_data = await fetch(curr_url); //fetching the data from the databse using the url
-    var curr_resData = await curr_data.json(); //converting data into something readable for JavaScript
-    currDisplayMovies(curr_resData);
-    // console.log(curr_data);
-    // console.log(curr_resData);
-}
+// async function makeCurrentPage(loadevent) {
+//     loadevent.preventDefault();
+//     let curr_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
+//     let curr_data = await fetch(curr_url); //fetching the data from the databse using the url
+//     var curr_resData = await curr_data.json(); //converting data into something readable for JavaScript
+//     currDisplayMovies(curr_resData);
+//     // console.log(curr_data);
+//     // console.log(curr_resData);
+// }
 
-function currDisplayMovies(responseData) {
-    /*this function takes the api data in json format and generates
-    a movie template that will be displayed on the webpage by adding 
-    to the html*/
-    const currMovieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
-    responseData.results.map((item) => {
-        movieGrid.innerHTML += `
-            <span class="movie-card">
-                <img id="movie-poster" src=${currMovieLink + item.poster_path}>
-                <div class="movie-title">${item.title}</div>
-                <div class="movie-date">${item.release_date}</div>
-                <span div="movie-votes">🌟${item.vote_average}</span>
-                <div>
-                    <div id="movie-description">${item.overview}</div>
-                </div>
-            </span>
+// function currDisplayMovies(responseData) {
+//     /*this function takes the api data in json format and generates
+//     a movie template that will be displayed on the webpage by adding 
+//     to the html*/
+//     console.log(userInput.value == "");
+//     const currMovieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
+//     responseData.results.map((item) => {
+//         movieGrid.innerHTML += `
+//             <span class="movie-card">
+//                 <img id="movie-poster" src=${currMovieLink + item.poster_path}>
+//                 <div class="movie-title">${item.title}</div>
+//                 <div class="movie-date">${item.release_date}</div>
+//                 <span div="movie-votes">🌟${item.vote_average}</span>
+//                 <div>
+//                     <div id="movie-description">${item.overview}</div>
+//                 </div>
+//             </span>
 
-            <div class="space">
-            </div>
-        `        
-    }) 
-}
+//             <div class="space">
+//             </div>
+//         `        
+//     }) 
+// }
 
 
 //functions for search input
-async function getMovieData(input) {
+async function getMovieData(input) { //add message for no search value
     /*this function fetches uses the user input in order to fetch the search term from the 
     movie database api and converts it into a json which is passed into displayMovie()*/
-    try {   
-        let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`; //movie database url with unique api key
+    try { 
+        let url;
+        //let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`;;
+        if (mainPage && userInput.value == "") {
+            url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
+        }  else {
+            url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`; //movie database url with unique api key
+            mainPage = false;
+        }
         let data = await fetch(url); //fetching the data from the databse using the url
         var resData = await data.json(); //converting data into something readable for JavaScript
         console.log(data);
@@ -82,10 +91,10 @@ function displayMovies(responseData) {
     /*this function takes the api data in json format and generates
     a movie template that will be displayed on the webpage by adding 
     to the html*/
-    closeSubmitButton.removeAttribute("hidden"); //this closes out the search
-    loadMoreMovies.removeAttribute("hidden")
+    if (!mainPage) {closeSubmitButton.removeAttribute("hidden");} //this closes out the search
+        //loadMoreMovies.removeAttribute("hidden")
     const movieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
-    movieGrid.innerHTML = ``;
+    // movieGrid.innerHTML = ``;
     responseData.results.map((item) => {
         movieGrid.innerHTML +=  `
         <span class="movie-card">
@@ -107,25 +116,60 @@ function displayMovies(responseData) {
     })
 }
 
-function handleFormSubmit(event) {
-    event.preventDefault();
+function handleFormSubmit(event,key) {
+    console.log(mainPage)
+    console.log(userInput.value)
+    // event.preventDefault();
+    if (!mainPage && userInput.value == "") {
+        movieGrid.innerHTML = ``
+        setTimeout(() => movieGrid.innerHTML = `
+        <div id=search-error>There are no search results that matched you search.</div>
+        `, 100)
+        closeSubmitButton.removeAttribute("hidden");
+        loadMoreMovies.hidden = true;
+        return;
+    }
+    //console.log(userInput.value == "");
     userInputElem = encodeURI(userInput.value);
-    console.log(userInput);
+    // if (!mainPage && userInputElem == "") {
+    //     mainPage = false;
+    //     movieGrid.innerHTML += 
+    // }
+    //console.log(userInput);
+    movieGrid.innerHTML = ``;
     getMovieData(userInputElem);
 }
 
 function removeHiddenX() {
     //removes the X button when it is clicked
+    mainPage = true;
     window.location.reload();
     closeSubmitButton.hidden = true; 
 }
 
-function removeHiddenMore() {
+function loadMore() {
     //removes the more button when it is clicked
-    loadMoreMovies.hidden = true;
     page++;
+    let input = userInput.value
+    getMovieData(input);
 }
 
 
-window.addEventListener('load', (loadevent) => {makeCurrentPage(loadevent)})
-form.addEventListener('submit',(event) => {handleFormSubmit(event)})
+form.addEventListener('submit',(event) => {
+    mainPage = false;
+    //console.log(mainPage);
+    event.preventDefault();
+    handleFormSubmit(event);
+    })
+
+window.addEventListener('load', (loadevent) => {
+    mainPage = true;
+    //console.log(mainPage);
+    loadMoreMovies.removeAttribute("hidden");
+    handleFormSubmit(loadevent);
+    })
+// console.log(mainPage);
+// console.log(userInput.value == "");
+
+//want to load more on current movie page... will need to call currentmoviegetter function
+    //from the loadmore function
