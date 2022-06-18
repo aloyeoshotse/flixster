@@ -16,6 +16,7 @@ const loadMoreMovies = document.querySelector("#load-more-movies-btn");
 //https://developers.themoviedb.org/3/search/search-movies --> movie database source
 const api = "517461a5845ab1a8b80623111b4006fc"; //api key from the MOVIE DB
 var userInputElem; //user input into search bar
+var page = 1;
 //var year; //year the movie was released
 
 //Filter Variables
@@ -28,7 +29,7 @@ var userInputElem; //user input into search bar
 //functions to load main page
 async function makeCurrentPage(loadevent) {
     loadevent.preventDefault();
-    let curr_url = "https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=1"; //movie database url with unique api key
+    let curr_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
     let curr_data = await fetch(curr_url); //fetching the data from the databse using the url
     var curr_resData = await curr_data.json(); //converting data into something readable for JavaScript
     currDisplayMovies(curr_resData);
@@ -43,11 +44,18 @@ function currDisplayMovies(responseData) {
     const currMovieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
     responseData.results.map((item) => {
         movieGrid.innerHTML += `
-        <div class="movie-card">
-            <img id="movie-poster" src=${currMovieLink + item.poster_path}>
-            <div class="movie-title">${item.title}</div>
-            <div class="movie-votes">🌟${item.vote_average}</div>
-        </div>
+            <span class="movie-card">
+                <img id="movie-poster" src=${currMovieLink + item.poster_path}>
+                <div class="movie-title">${item.title}</div>
+                <div class="movie-date">${item.release_date}</div>
+                <span div="movie-votes">🌟${item.vote_average}</span>
+                <div>
+                    <div id="movie-description">${item.overview}</div>
+                </div>
+            </span>
+
+            <div class="space">
+            </div>
         `        
     }) 
 }
@@ -58,7 +66,7 @@ async function getMovieData(input) {
     /*this function fetches uses the user input in order to fetch the search term from the 
     movie database api and converts it into a json which is passed into displayMovie()*/
     try {   
-        let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}`; //movie database url with unique api key
+        let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`; //movie database url with unique api key
         let data = await fetch(url); //fetching the data from the databse using the url
         var resData = await data.json(); //converting data into something readable for JavaScript
         console.log(data);
@@ -79,13 +87,20 @@ function displayMovies(responseData) {
     const movieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
     movieGrid.innerHTML = ``;
     responseData.results.map((item) => {
-        movieGrid.innerHTML += `
-        <div class="movie-card">
+        movieGrid.innerHTML +=  `
+        <span class="movie-card">
             <img id="movie-poster" src=${movieLink + item.poster_path}>
             <div class="movie-title">${item.title}</div>
-            <div class="movie-votes">🌟${item.vote_average}</div>
+            <div class="movie-date">${item.release_date}</div>
+            <span div="movie-votes">🌟${item.vote_average}</span>
+            <div>
+                <div id="movie-description">${item.overview}</div>
+            </div>
+        </span>
+
+        <div class="space">
         </div>
-        `
+    `        
         console.log(item.title)
         console.log(typeof(item.poster_path));
         console.log(item.poster_path);
@@ -103,12 +118,12 @@ function removeHiddenX() {
     //removes the X button when it is clicked
     window.location.reload();
     closeSubmitButton.hidden = true; 
-    //form.addEventListener('click',(clickevent) => {makeCurrentPage(clickevent);})
 }
 
 function removeHiddenMore() {
     //removes the more button when it is clicked
     loadMoreMovies.hidden = true;
+    page++;
 }
 
 
