@@ -12,14 +12,16 @@
     
     <form id="search">
         <input type="text" id="search-input" placeholder="Search Flixster">
-        <button id="search-btn" type="submit">Search</button><span>
-        <button id="close-search-btn"></button></span>
+        <button id="search-btn" type="submit">Search</button>
+        <span>
+            <button id="close-search-btn" hidden onclick="removeHiddenX()">X</button>
+        </span>
     </form>
 
-    <div id="movie-grid" onload=""></div>
+    <div id="movie-grid"></div>
 
     <footer>
-        <button id="load-more-movies-btn"></button>
+        <button id="load-more-movies-btn" hidden onclick="">Load More</button>
     </footer>
 </body>
 <script src="script.js"></script>
