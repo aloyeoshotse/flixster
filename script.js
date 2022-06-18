@@ -24,6 +24,32 @@ var userInputElem; //user input into search bar
 //var end_date;
 //var movie_id;
 
+async function makeCurrentPage(loadevent) {
+    loadevent.preventDefault();
+    let curr_url = "https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=1"; //movie database url with unique api key
+    let curr_data = await fetch(curr_url); //fetching the data from the databse using the url
+    var curr_resData = await curr_data.json(); //converting data into something readable for JavaScript
+    currDisplayMovies(curr_resData);
+    console.log(curr_data);
+    console.log(curr_resData);
+}
+
+
+function currDisplayMovies(responseData) {
+    /*this function takes the api data in json format and generates
+    a movie template that will be displayed on the webpage by adding 
+    to the html*/
+    const currMovieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
+    responseData.results.map((item) => {
+        movieGrid.innerHTML += `
+        <div class="movie-card">
+            <img id="movie-poster" src=${currMovieLink + item.poster_path}>
+            <div class="movie-title">${item.title}</div>
+            <div class="movie-votes">🌟${item.vote_average}</div>
+        </div>
+        `        
+    }) 
+}
 
 async function getMovieData(input) {
     /*this function fetches uses the user input in order to fetch the search term from the 
@@ -35,7 +61,7 @@ async function getMovieData(input) {
         console.log(data);
         console.log(resData);
         
-        displayMovie(resData);
+        displayMovies(resData);
     }
     catch(error) {
         console.log(error);
@@ -48,11 +74,12 @@ function displayMovies(responseData) {
     to the html*/
     const movieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
     responseData.results.map((item) => {
+        movieGrid.innerHTML = ``;
         movieGrid.innerHTML += `
         <div class="movie-card">
             <img id="movie-poster" src=${movieLink + item.poster_path}>
             <div class="movie-title">${item.title}</div>
-            <div class="movie-votes">${item.vote_average}</div>
+            <div class="movie-votes">🌟${item.vote_average}</div>
         </div>
         `
        /* console.log(item.title)
@@ -69,4 +96,6 @@ function handleFormSubmit(event) {
     getMovieData(userInputElem);
 }
 
-form.addEventListener('submit',(event) => {handleFormSubmit(event)});
+
+window.addEventListener('load', (loadevent) => {makeCurrentPage(loadevent)})
+form.addEventListener('submit',(event) => {handleFormSubmit(event)})
