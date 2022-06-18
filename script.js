@@ -27,42 +27,6 @@ var mainPage;
 //var movie_id;
 
 
-//functions to load main page
-// async function makeCurrentPage(loadevent) {
-//     loadevent.preventDefault();
-//     let curr_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
-//     let curr_data = await fetch(curr_url); //fetching the data from the databse using the url
-//     var curr_resData = await curr_data.json(); //converting data into something readable for JavaScript
-//     currDisplayMovies(curr_resData);
-//     // console.log(curr_data);
-//     // console.log(curr_resData);
-// }
-
-// function currDisplayMovies(responseData) {
-//     /*this function takes the api data in json format and generates
-//     a movie template that will be displayed on the webpage by adding 
-//     to the html*/
-//     console.log(userInput.value == "");
-//     const currMovieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
-//     responseData.results.map((item) => {
-//         movieGrid.innerHTML += `
-//             <span class="movie-card">
-//                 <img id="movie-poster" src=${currMovieLink + item.poster_path}>
-//                 <div class="movie-title">${item.title}</div>
-//                 <div class="movie-date">${item.release_date}</div>
-//                 <span div="movie-votes">🌟${item.vote_average}</span>
-//                 <div>
-//                     <div id="movie-description">${item.overview}</div>
-//                 </div>
-//             </span>
-
-//             <div class="space">
-//             </div>
-//         `        
-//     }) 
-// }
-
-
 //functions for search input
 async function getMovieData(input) { //add message for no search value
     /*this function fetches uses the user input in order to fetch the search term from the 
