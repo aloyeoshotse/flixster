@@ -1,5 +1,5 @@
 //https://www.adobe.com/express/create/logo --> website used to make logo
-//differnt endpoint for now playing vs search vs other stuff
+//different endpoint for now playing vs search vs other stuff
 //config endpoint --> (look this up)
 
 //DOM Variables
@@ -37,10 +37,14 @@ async function getMovieData(input) {
         let url;
         //let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`;;
         if (mainPage && userInput.value == "") {
-            url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //main page url with api key
+            url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}&limit=5`; //main page url with api key
+            document.querySelector("#now-playing").hidden = false;
+            document.querySelector("#search-results").hidden = true;
         }  else {
             url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`; //movie database url with unique api key
             mainPage = false;
+            document.querySelector("#now-playing").hidden = true;
+            document.querySelector("#search-results").hidden = false;
         }
         let data = await fetch(url); //fetching the data from the databse using the url
         var resData = await data.json(); //converting data into something readable for JavaScript
@@ -135,17 +139,6 @@ form.addEventListener('submit',(event) => {
     console.log("listener works");
     handleFormSubmit(event);
     })
-
-// function keyPressFunc(event) {
-//     form.addEventListener('keypress', (event) => {
-//         if (e.keyCode == 13)
-//         {
-//         mainPage = false;
-//         console.log("listener works");
-//         handleFormSubmit(event);
-//         }
-//     })  
-// }
 
 
 
