@@ -1,24 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width">
     <title>Flixster: Movie Database</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>🍿Flixster🍿</h1>
-    
-    <form id="search">
-        <input type="text" id="search-input" placeholder="Search Flixster">
-        <button id="search-btn" type="submit">Search</button>
-        <span>
-            <button id="close-search-btn" hidden onclick="removeHiddenX()">X</button>
-        </span>
-    </form>
+    <header>
+        <form id="search">
+            <img id="logo" src="images/Flixster.png">
+            <input type="text" id="search-input" placeholder="Search Flixster">
+            <button id="search-btn" type="submit"><i class="fa fa-search"></i></button>
+            <button id="close-search-btn" onclick="removeHiddenX()"><i class="fa fa-home"></i></button>
+        </form>
+    </header>
     <div id="movie-grid"></div>
-
     <footer>
         <button id="load-more-movies-btn" hidden onclick="loadMore()">Load More</button>
     </footer>

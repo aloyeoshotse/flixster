@@ -1,5 +1,9 @@
 /* page formatting */
 body {
+    background-color: white;
+}
+
+header {
     background-color: black;
 }
 
@@ -10,17 +14,27 @@ h1 {
     
 }
 
+#logo {
+    /* background-color: white; */
+    margin-top: 20px;
+    margin-left: 5px;
+    width: 200px;
+    height: auto;
+}
+
 #search {
+    margin-left: 2.3cm;
+    height: 2cm;
     display: flex;
     align-items: center;
-    justify-content: center;
+    max-width: 100%;
 }
 
 #search-input {
-    padding: 14px 16px;
+    padding: 22px 24px;
     font-size: 17px;
-    width: 75%;
-    height: 25;
+    width: 65%;
+    height: 15%;
     border-radius: 10px;
 }
 
@@ -37,7 +51,8 @@ h1 {
 }
 
 #search-error {
-    color: white;
+    background-color: white;
+    color: black;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: 3.5cm;
 }
@@ -59,6 +74,13 @@ footer {
     width: 40cm;
     text-align: left;
     font-size: 24px;
+    min-width: 10%;
+    max-width: 90%;
+}
+
+.movie-date {
+    color: gray;
+    font-size: 18px;
 }
 
 .movie-votes {
@@ -70,9 +92,16 @@ footer {
 
 /* Formatting the movies on the page */
 #movie-grid {
-    margin-left: 1cm;
-    margin-right: 2cm;
+    background-color: gray;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 1cm;
+    margin-bottom: 1cm;
+    width: 35cm;
+    padding: 2px 4px;
+    border-radius: 10px;
+    min-width: 10%;
+    max-width: 90%;
 }
 
 .movie-card {
@@ -87,13 +116,16 @@ footer {
     grid-template-rows: repeat(5, 75px);
     grid-auto-flow: dense; */
     background-color: #e5e5e5;
+    /* background-color: white; */
     border-radius: 25px;
-    width: 45cm;
+    width: 35cm;
     height: auto;
     display: flex;
     display: inline-block;
     flex-direction: column;
     flex-wrap: wrap;
+    min-width: 10%;
+    max-width: 100%;
 }
 
 /* .movie-words {
@@ -107,20 +139,36 @@ footer {
 } */
 
 #movie-description {
-    margin-top: 40px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 4cm;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 #movie-poster {
     /* background-color: blue; */
     float: left;
     border-radius: 25px;
-    width: 3cm;
+    width: 2cm;
     height: auto;
     size: fixed;
     padding: 14px 16px;
 }
 
 .space {
-    background-color: black;
+    
+    margin-left: auto;
+    margin-right: auto;
     height: 0.5cm;
+    width: 35cm;
+    /* padding: 2px 4px;
+    border-radius: 10px; */
+}
+
+#load-more-movies-btn {
+    padding: 6px 8px;
+    font-size: 10px;
+    border-radius: 10px;
 }

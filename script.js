@@ -1,3 +1,4 @@
+//https://www.adobe.com/express/create/logo --> website used to make logo
 //differnt endpoint for now playing vs search vs other stuff
 //config endpoint --> (look this up)
 
@@ -26,24 +27,34 @@ var mainPage;
 //var end_date;
 //var movie_id;
 
-
 //functions for search input
-async function getMovieData(input) { //add message for no search value
+async function getMovieData(input) { 
+    /* */
+    //add message for no search value
     /*this function fetches uses the user input in order to fetch the search term from the 
     movie database api and converts it into a json which is passed into displayMovie()*/
     try { 
         let url;
         //let url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`;;
         if (mainPage && userInput.value == "") {
-            url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //movie database url with unique api key
+            url = `https://api.themoviedb.org/3/movie/now_playing?api_key=517461a5845ab1a8b80623111b4006fc&language=en-US&page=${page}`; //main page url with api key
         }  else {
             url = `https://api.themoviedb.org/3/search/movie?api_key=${api}&query=${input}&page=${page}`; //movie database url with unique api key
             mainPage = false;
         }
         let data = await fetch(url); //fetching the data from the databse using the url
         var resData = await data.json(); //converting data into something readable for JavaScript
-        console.log(data);
+        // console.log(data);
         console.log(resData);
+        if (resData.results.length == 0){
+            movieGrid.innerHTML = ``
+            setTimeout(() => movieGrid.innerHTML = `
+            <div id=search-error>There are no search results that matched you search.</div>
+            `, 100)
+            closeSubmitButton.removeAttribute("hidden");
+            loadMoreMovies.hidden = true;
+            return;
+        }
         displayMovies(resData);
     }
     catch(error) {
@@ -55,36 +66,39 @@ function displayMovies(responseData) {
     /*this function takes the api data in json format and generates
     a movie template that will be displayed on the webpage by adding 
     to the html*/
-    if (!mainPage) {closeSubmitButton.removeAttribute("hidden");} //this closes out the search
+    //if (!mainPage) {closeSubmitButton.removeAttribute("hidden");} //this closes out the search
         //loadMoreMovies.removeAttribute("hidden")
     const movieLink = "https://www.themoviedb.org/t/p/w440_and_h660_face"; //movie DB image link
-    // movieGrid.innerHTML = ``;
     responseData.results.map((item) => {
+        let poster;
+        let year = item.release_date.slice(0,4)
+        // let month = item.release_date.slice(5,7)
+        // let day = item.release_date.slice(8);
+        // let date = new Date(year, month-1, day); date.toDateString().slice(4)
+        if (item.poster_path === null){poster = '<img id="movie-poster" src="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"></img>'}
+        else {poster = `<img id="movie-poster" src=${movieLink + item.poster_path}></img>`}
         movieGrid.innerHTML +=  `
-        <span class="movie-card">
-            <img id="movie-poster" src=${movieLink + item.poster_path}>
+        <div class="movie-card">
+            ${poster}
+            <div></div>
             <div class="movie-title">${item.title}</div>
-            <div class="movie-date">${item.release_date}</div>
-            <span div="movie-votes">🌟${item.vote_average}</span>
+            <div class="movie-date">(${year})</div>
+            <div div="movie-votes">🌟${item.vote_average}</div>
             <div>
-                <div id="movie-description">${item.overview}</div>
+                <div></div>
             </div>
-        </span>
-
-        <div class="space">
+            <div id="movie-description">${item.overview}</div>
         </div>
+        <div class="space"></div>
     `        
-        console.log(item.title)
-        console.log(typeof(item.poster_path));
-        console.log(item.poster_path);
     })
 }
 
-function handleFormSubmit(event,key) {
-    console.log(mainPage)
-    console.log(userInput.value)
-    // event.preventDefault();
+function handleFormSubmit(event) {
+    // console.log(mainPage)
+    // console.log(userInput.value)
     if (!mainPage && userInput.value == "") {
+        console.log("error")
         movieGrid.innerHTML = ``
         setTimeout(() => movieGrid.innerHTML = `
         <div id=search-error>There are no search results that matched you search.</div>
@@ -95,11 +109,7 @@ function handleFormSubmit(event,key) {
     }
     //console.log(userInput.value == "");
     userInputElem = encodeURI(userInput.value);
-    // if (!mainPage && userInputElem == "") {
-    //     mainPage = false;
-    //     movieGrid.innerHTML += 
-    // }
-    //console.log(userInput);
+    console.log(userInputElem);
     movieGrid.innerHTML = ``;
     getMovieData(userInputElem);
 }
@@ -121,10 +131,23 @@ function loadMore() {
 
 form.addEventListener('submit',(event) => {
     mainPage = false;
-    //console.log(mainPage);
     event.preventDefault();
+    console.log("listener works");
     handleFormSubmit(event);
     })
+
+// function keyPressFunc(event) {
+//     form.addEventListener('keypress', (event) => {
+//         if (e.keyCode == 13)
+//         {
+//         mainPage = false;
+//         console.log("listener works");
+//         handleFormSubmit(event);
+//         }
+//     })  
+// }
+
+
 
 window.addEventListener('load', (loadevent) => {
     mainPage = true;
@@ -132,8 +155,6 @@ window.addEventListener('load', (loadevent) => {
     loadMoreMovies.removeAttribute("hidden");
     handleFormSubmit(loadevent);
     })
-// console.log(mainPage);
-// console.log(userInput.value == "");
+console.log(mainPage);
+console.log(userInput.value == "");
 
-//want to load more on current movie page... will need to call currentmoviegetter function
-    //from the loadmore function
