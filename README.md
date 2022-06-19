@@ -29,14 +29,14 @@ Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
   - When a user hits 'Enter', it should send a search request to the movies API
   - The results from the search should be displayed on the page
   - There should be a close icon with an id of `close-search-btn` that exits the search, clears results, and shows the current movies displayed previously
-- [ ] Website accounts for basic HTML/CSS accessibility features
-- [ ] Website should be responsive
+- [x] Website accounts for basic HTML/CSS accessibility features
+- [x] Website should be responsive
 
 #### STRETCH FEATURES
 
 - [ ] Deploy website using GitHub Pages. 
 - [ ] Allow user to view more details about a movie within a popup.
-- [ ] Improve the user experience through CSS & animation.
+- [x] Improve the user experience through CSS & animation.
 - [ ] Allow movie video trailers to be played using [embedded YouTube](https://support.google.com/youtube/answer/171780?hl=en)
 - [ ] Implement anything else that you can get done to improve the app functionality!
 
@@ -50,15 +50,15 @@ Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+I believe the topics in our labs did prepare me for this project. I believe learning about DOM, innerHTML, and arrow functions served me very well in this project because it allowed me to access the HTML file from the JS file and make changes as needed. 
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-Add your response here
+I would make the more results page load a different page instead of adding more movies to the bottom. I believe that the website would look more clean this way.
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-Add your response here
+I like the design of my webpage. It was extremely difficult for me to get the webpage wrapped the way it is. I was trying to find a way to limit the number of movies that appeared on the screen at a time, but I was unable to figure it out unfortunately.  
 
 ### Open-source libraries used
 
