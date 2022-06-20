@@ -59,10 +59,6 @@ I would make the more results page load a different page instead of adding more 
 
 I like the design of my webpage. It was extremely difficult for me to get the webpage wrapped the way it is. I was trying to find a way to limit the number of movies that appeared on the screen at a time, but I was unable to figure it out unfortunately.  
 
-### Open-source libraries used
-
-- Add any links to open-source libraries used in your project.
-
 ### Shout out
 
-Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+Shout out to all the TAs and mentors.
