@@ -12,6 +12,11 @@ const movieTitle = document.querySelector(".movie-title");
 const moviePoster = document.querySelector("#movie-poster");
 const movieVotes = document.querySelector(".movie-votes");
 const loadMoreMovies = document.querySelector("#load-more-movies-btn");
+var modal = document.querySelector("#modal");
+//movie button
+var link = document.querySelector("#mtitle-preview");
+var closeModal = document.querySelector(".close");
+
 
 //Parameters for Movie Database API 
 //https://developers.themoviedb.org/3/search/search-movies --> movie database source
@@ -85,7 +90,7 @@ function displayMovies(responseData) {
         <div class="movie-card">
             ${poster}
             <div></div>
-            <div class="movie-title">${item.title}</div>
+            <div class="movie-title" id="mtitle-preview" onclick="displayPopup()">${item.title}</div>
             <div class="movie-date">(${year})</div>
             <div div="movie-votes">🌟${item.vote_average}</div>
             <div>
@@ -93,10 +98,48 @@ function displayMovies(responseData) {
             </div>
             <div id="movie-description">${item.overview}</div>
         </div>
+
+        <div id="modal"> 
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+        </div>
+
         <div class="space"></div>
     `        
     })
 }
+
+function removeHiddenX() {
+    //removes the X button when it is clicked
+    mainPage = true;
+    window.location.reload();
+    closeSubmitButton.hidden = true; 
+}
+
+function loadMore() {
+    //removes the more button when it is clicked
+    page++;
+    let input = userInput.value
+    getMovieData(input);
+}
+// // When the user clicks on the button, open the modal
+// link.onclick = function() {
+//     modal.style.display = "block";
+//   }
+  
+//   // When the user clicks on <span> (x), close the modal
+// closeModal.onclick = function() {
+//     modal.style.display = "none";
+//   }
+  
+//   // When the user clicks anywhere outside of the modal, close it
+//   window.onclick = function(event) {
+//     if (event.target == modal) {
+//       modal.style.display = "none";
+//     }
+//   }
 
 function handleFormSubmit(event) {
     // console.log(mainPage)
@@ -117,21 +160,6 @@ function handleFormSubmit(event) {
     movieGrid.innerHTML = ``;
     getMovieData(userInputElem);
 }
-
-function removeHiddenX() {
-    //removes the X button when it is clicked
-    mainPage = true;
-    window.location.reload();
-    closeSubmitButton.hidden = true; 
-}
-
-function loadMore() {
-    //removes the more button when it is clicked
-    page++;
-    let input = userInput.value
-    getMovieData(input);
-}
-
 
 form.addEventListener('submit',(event) => {
     mainPage = false;
